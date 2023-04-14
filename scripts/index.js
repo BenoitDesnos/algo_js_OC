@@ -8,7 +8,7 @@ function dsiplayRecipes(recipes) {
   const recipesSection = document.getElementById("recipes__wrapper");
   recipes.forEach((recipe) => {
     const recipeModel = recipeFactory(recipe);
-    console.log(recipeModel);
+
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
 
     recipesSection.appendChild(recipeCardDOM);
@@ -30,16 +30,36 @@ function recipeFactory(recipe) {
   const cardInfos = document.createElement("section");
 
   const cardInfosTitle = document.createElement("h3");
+  cardInfosTitle.textContent = name;
 
-  const cardInfosTime = document.createElement("span");
-  cardInfosTime.textContent = name;
+  const icon = document.createElement("img");
+  icon.setAttribute("src", "./../images/time.svg");
+  const cardInfosTimeContainer = document.createElement("span");
+  const cardInfosTime = document.createElement("p");
+  cardInfosTime.textContent = time + " min";
+  cardInfosTimeContainer.appendChild(icon);
+  cardInfosTimeContainer.appendChild(cardInfosTime);
+  console.log(icon);
 
   const cardInfosRecipe = document.createElement("ul");
-
+  let cardInfosingredient;
+  ingredients.forEach((recipe) => {
+    const { ingredient, quantity, unit } = recipe;
+    cardInfosingredient = document.createElement("li");
+    cardInfosingredient.textContent = `${ingredient}${
+      quantity ? ": " + quantity : ""
+    } ${unit ? unit : ""}`;
+    cardInfosRecipe.appendChild(cardInfosingredient);
+  });
   const cardInfosDescription = document.createElement("p");
+  cardInfosDescription.textContent = description;
 
   function getRecipeCardDOM() {
-    cardInfos.appendChild(cardInfosTime);
+    cardInfos.appendChild(cardInfosTitle);
+
+    cardInfos.appendChild(cardInfosTimeContainer);
+    cardInfos.appendChild(cardInfosRecipe);
+    cardInfos.appendChild(cardInfosDescription);
     return cardInfos;
   }
 
