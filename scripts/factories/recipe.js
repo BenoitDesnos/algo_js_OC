@@ -42,7 +42,7 @@ function recipeFactory(recipe) {
     const { ingredient, quantity, unit } = recipe;
     cardInfosingredient = document.createElement("li");
     cardInfosingredient.classList.add("recipe__ingredient");
-    cardInfosingredient.innerHTML = `<span><strong>${ingredient}</strong>${
+    cardInfosingredient.innerHTML = `<span><strong class="ingredient">${ingredient}</strong>${
       quantity ? ": " + quantity : ""
     }${unit ? unit : ""}</span>`;
     cardInfosRecipe.appendChild(cardInfosingredient);

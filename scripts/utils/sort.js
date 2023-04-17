@@ -1,16 +1,37 @@
-const searcBar = document.getElementById("search__bar");
+const searchBar = document.getElementById("search__bar");
+let searchedString;
+let titleString;
+let ingredientString = [];
+let utensilString;
 
-console.log(searcBar);
+console.log(searchBar);
 
-searcBar.addEventListener("input", (e) => {
-  const recipeTitles = document.querySelectorAll(".recipe__title");
-  console.log(recipeTitles);
-  console.log(e.target.value.toLowerCase());
-  recipeTitles.forEach((title) => {
-    if (!title.textContent.toLowerCase().includes(e.target.value)) {
-      title.closest("section").style.display = "none";
+searchBar.addEventListener("input", (e) => {
+  /*  const recipeTitles = document.querySelectorAll(".recipe__title"); */
+  const recipeInfosContainer = document.querySelectorAll(
+    ".recipe__infos__container"
+  );
+  searchedString = e.target.value;
+
+  recipeInfosContainer.forEach((container) => {
+    titleString = container.children[0].textContent;
+    if (
+      !makeStringCaseAndAccentInsensitive(titleString).includes(
+        makeStringCaseAndAccentInsensitive(searchedString)
+      ) &&
+      e.target.value.length >= 3
+    ) {
+      console.log("test");
+      container.closest(".recipe__wrapper").style.display = "none";
     } else {
-      title.closest("section").style.display = "block";
+      container.closest(".recipe__wrapper").style.display = "block";
     }
   });
 });
+
+function makeStringCaseAndAccentInsensitive(prop) {
+  return prop
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
