@@ -16,15 +16,12 @@ function handleFilter(e) {
     // toggle isInputMatchingTrue
     makeStringCaseAndAccentInsensitive(titleString, descriptionString, ingredientsString)
     .forEach((string) => {
-      switch (isInputMatchingTrue) {
-        case false:
-          string.includes(
-            makeStringCaseAndAccentInsensitive(searchedString)
-          ) === false
-            ? (isInputMatchingTrue = false)
-            : (isInputMatchingTrue = true);
-          break;
-      }
+      if (!isInputMatchingTrue) {
+        string.includes(makeStringCaseAndAccentInsensitive(searchedString)) ===
+        false
+          ? (isInputMatchingTrue = false)
+          : (isInputMatchingTrue = true);
+      }     
     });
     
     // display container or not according to isInputMatchingTrue and inputLength
