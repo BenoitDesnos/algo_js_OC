@@ -1,4 +1,5 @@
-function recipeFactory(recipe) {
+let ingredientsTags = [];
+function recipeFactory(recipe, index, length) {
   const {
     id,
     name,
@@ -51,6 +52,10 @@ function recipeFactory(recipe) {
   cardInfosDescription.classList.add("recipe__description");
   cardInfosDescription.textContent = description;
 
+  ingredients.forEach((ingredient) => {
+    ingredientsTags = [...ingredientsTags, ingredient.ingredient];
+  });
+
   function getRecipeCardDOM() {
     cardInfos.appendChild(cardImgContainer);
     cardInfos.appendChild(cardInfosContainer);
@@ -60,16 +65,23 @@ function recipeFactory(recipe) {
     cardInfosContainer.appendChild(cardInfosDescription);
     return cardInfos;
   }
+  const tagsWrapper = document.getElementsByClassName("tags__wrapper");
+  function getIngredientsDOM() {
+    if (index === length - 1) {
+      let ingredientItem;
+      const uniqueIngredients = sortStrings(ingredientsTags);
+      uniqueIngredients.forEach((ingredient) => {
+        ingredientItem = document.createElement("li");
+        ingredientItem.classList.add("ingredients__tag");
+        ingredientItem.textContent = ingredient;
+        tagsWrapper[0].appendChild(ingredientItem);
+      });
+    }
+    return tagsWrapper[0];
+  }
 
   return {
-    id,
-    name,
-    servings,
-    ingredients,
-    time,
-    description,
-    appliance,
-    ustensils,
     getRecipeCardDOM,
+    getIngredientsDOM,
   };
 }

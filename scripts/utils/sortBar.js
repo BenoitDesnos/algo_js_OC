@@ -10,20 +10,25 @@ function handleFilter(e) {
     // variables
     let isInputMatchingTrue = false;
     let titleString = container.querySelector(".recipe__title").textContent;
-    let descriptionString = container.querySelector(".recipe__description").textContent;
+    let descriptionString = container.querySelector(
+      ".recipe__description"
+    ).textContent;
     let ingredientsString = returnIngredientsByContainer(container);
 
     // toggle isInputMatchingTrue
-    makeStringCaseAndAccentInsensitive(titleString, descriptionString, ingredientsString)
-    .forEach((string) => {
+    makeStringCaseAndAccentInsensitive(
+      titleString,
+      descriptionString,
+      ingredientsString
+    ).forEach((string) => {
       if (!isInputMatchingTrue) {
         string.includes(makeStringCaseAndAccentInsensitive(searchedString)) ===
         false
           ? (isInputMatchingTrue = false)
           : (isInputMatchingTrue = true);
-      }     
+      }
     });
-    
+
     // display container or not according to isInputMatchingTrue and inputLength
     if (!isInputMatchingTrue && e.target.value.length >= 3) {
       container.closest(".recipe__wrapper").style.display = "none";
@@ -31,16 +36,6 @@ function handleFilter(e) {
       container.closest(".recipe__wrapper").style.display = "block";
     }
   });
-}
-
-// change strings format to case and accent insensitive
-function makeStringCaseAndAccentInsensitive(...parameter) {
-  return parameter.map((prop) => {
-        return prop
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-      });
 }
 
 function returnIngredientsByContainer(container) {

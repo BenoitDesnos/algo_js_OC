@@ -20,12 +20,18 @@
                 <input type="search" id="search__bar" placeholder="Rechercher une recette">
             </div>
             <ul id="search__tags__wrapper">
-                <li class="search__tag">Ingredients <img class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                <li id="search__tag__ingredients" class="search__tag isOpen"><span class="search__tag__title">Ingredients</span><img
+                        class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                    <ul class="tags__wrapper"></ul>
                 </li>
-                <li class="search__tag">Appareils<img class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                <li id="search__tag__appliance" class="search__tag isClosed"><span class="search__tag__title">Appareils</span><img
+                        class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                    <ul class="tags__wrapper"></ul>
                 </li>
                 </li>
-                <li class="search__tag">Ustensils<img class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                <li id="search__tag__ustensils" class="search__tag isClosed"><span class="search__tag__title">Ustensils</span><img
+                        class="search__tag__arrow" src="./images/down-arrow.svg" alt="menu toggle">
+                    <ul class="tags__wrapper"></ul>
                 </li>
                 </li>
             </ul>
@@ -34,9 +40,15 @@
             
         </div>
     </main>
+    <script src="/scripts/utils/globalsFunctions.js"></script>
+    <script src="/scripts/utils/sortBar.js"></script>
+    <script src="/scripts/utils/sortTag.js"></script>
     <script src="/scripts/pages/index.js"></script>
     <script src="/scripts/factories/recipe.js"></script>
-    <script src="/scripts/utils/sort.js"></script>
 </body>
 
 </html>
+height: auto;
+flex-direction: column;
+padding-left: 30px;
+align-items: flex-start

@@ -31,7 +31,8 @@ ul {
 #search__tags__wrapper {
     display: flex;
     justify-content: start;
-    align-items: center;
+    align-items: start;
+        max-height: 70px;
 }
 
 #search__bar__wrapper {
@@ -62,8 +63,6 @@ ul {
 .search__tag {
     position: relative;
     text-decoration: none;
-    width: 170px;
-    height: 70px;
     background-color: #68D9A4;
     display: flex;
     justify-content: start;
@@ -73,6 +72,7 @@ ul {
     color: white;
     font-size: 18px;
     border-radius: 5px;
+
 }
 
 .search__tag:first-child {
@@ -183,3 +183,46 @@ ul {
 
 
 }
+.tags__wrapper {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    max-height: 500px;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    row-gap: 50px;
+    column-gap: 20px;
+    width: 100%;
+    margin-right: 30px;
+
+}
+
+.ingredients__tag {
+    margin-right: 30px;
+    font-size: 15px;
+}
+
+.search__tag__title {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.search__tag.isOpen {
+    height: auto;
+
+
+    width: 30%;
+    flex-direction: column;
+    padding-left: 30px;
+    align-items: flex-start
+}
+
+.search__tag.isClosed {
+    height: 70px;
+    width: 170px;
+    flex-direction: column;
+    padding-left: 30px;
+    align-items: flex-start
+}
+
+.tags__wrapper {}
