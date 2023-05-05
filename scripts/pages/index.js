@@ -7,6 +7,8 @@ function dsiplayRecipes(recipes) {
   const ingredientsSection = document.getElementById(
     "search__tag__ingredients"
   );
+  const appliancesSection = document.getElementById("search__tag__appliances");
+  const ustensilsSection = document.getElementById("search__tag__ustensils");
   recipes.forEach((recipe, index) => {
     const recipeModel = recipeFactory(recipe, index, recipes.length);
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
@@ -14,5 +16,11 @@ function dsiplayRecipes(recipes) {
 
     const recipeIngredientsDOM = recipeModel.getIngredientsDOM();
     ingredientsSection.appendChild(recipeIngredientsDOM);
+
+    const recipeAppliancesDOM = recipeModel.getAppliancesDOM();
+    appliancesSection.appendChild(recipeAppliancesDOM);
+
+    const recipeUstensilsDOM = recipeModel.getUstensilsDOM();
+    ustensilsSection.appendChild(recipeUstensilsDOM);
   });
 }

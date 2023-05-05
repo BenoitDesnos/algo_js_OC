@@ -23,8 +23,9 @@ const sortStrings = (arr) => {
   const originalArr = sortedArr.map(
     (str, index) => arr[transformedArr.indexOf(str)]
   );
-  originalArr.forEach((string) => {
-    capitalizeFirstLetter(string);
+  const originalArrayCapitalized = originalArr.map((string) => {
+    return capitalizeFirstLetter(string);
   });
-  return originalArr;
+
+  return originalArrayCapitalized;
 };

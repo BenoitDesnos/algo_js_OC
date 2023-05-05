@@ -66,7 +66,7 @@ ul {
     background-color: #68D9A4;
     display: flex;
     justify-content: start;
-    padding-left: 15px;
+
     margin-right: 20px;
     align-items: center;
     color: white;
@@ -85,7 +85,7 @@ ul {
 
 .search__tag__arrow {
     position: absolute;
-    right: 30px;
+    right: 18px;
     top: 30px;
 
 }
@@ -197,14 +197,41 @@ ul {
 
 }
 
-.ingredients__tag {
+.tag {
     margin-right: 30px;
     font-size: 15px;
+    margin-left: 7px;
+        border-radius: 5px;
+        padding: 10px 15px 10px 15px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+    
+    #search__tag__ingredients .tags__wrapper .tag:hover {
+        background-color: #255296;
+        cursor: pointer;
+    }
+    
+    #search__tag__ustensils .tags__wrapper .tag:hover {
+        background-color: #be3c2e;
+        cursor: pointer;
+    }
+    
+    #search__tag__appliances .tags__wrapper .tag:hover {
+        background-color: #0ca55d;
+        cursor: pointer;
+    }
+    
+    .tags__wrapper:first-child {
+        background-color: #759bd4;
 }
 
 .search__tag__title {
     margin-top: 25px;
     text-align: left;
+    padding-left: 22px;
+        font-size: 18px;
 }
 
 .search__tag.isOpen {
@@ -213,7 +240,7 @@ ul {
 
     width: 30%;
     flex-direction: column;
-    padding-left: 30px;
+    
     align-items: flex-start
 }
 
@@ -221,8 +248,7 @@ ul {
     height: 70px;
     width: 170px;
     flex-direction: column;
-    padding-left: 30px;
+
     align-items: flex-start
 }
 
-.tags__wrapper {}

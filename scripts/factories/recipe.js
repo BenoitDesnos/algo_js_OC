@@ -1,4 +1,6 @@
 let ingredientsTags = [];
+let appliancesTags = [];
+let ustensilsTags = [];
 function recipeFactory(recipe, index, length) {
   const {
     id,
@@ -52,10 +54,6 @@ function recipeFactory(recipe, index, length) {
   cardInfosDescription.classList.add("recipe__description");
   cardInfosDescription.textContent = description;
 
-  ingredients.forEach((ingredient) => {
-    ingredientsTags = [...ingredientsTags, ingredient.ingredient];
-  });
-
   function getRecipeCardDOM() {
     cardInfos.appendChild(cardImgContainer);
     cardInfos.appendChild(cardInfosContainer);
@@ -66,22 +64,59 @@ function recipeFactory(recipe, index, length) {
     return cardInfos;
   }
   const tagsWrapper = document.getElementsByClassName("tags__wrapper");
+  ingredients.forEach((ingredient) => {
+    ingredientsTags = [...ingredientsTags, ingredient.ingredient];
+  });
+
   function getIngredientsDOM() {
     if (index === length - 1) {
       let ingredientItem;
       const uniqueIngredients = sortStrings(ingredientsTags);
       uniqueIngredients.forEach((ingredient) => {
         ingredientItem = document.createElement("li");
-        ingredientItem.classList.add("ingredients__tag");
+        ingredientItem.classList.add("tag");
         ingredientItem.textContent = ingredient;
         tagsWrapper[0].appendChild(ingredientItem);
       });
     }
     return tagsWrapper[0];
   }
+  appliancesTags = [...appliancesTags, appliance];
+  function getAppliancesDOM() {
+    if (index === length - 1) {
+      let applianceItem;
+      const uniqueAppliances = sortStrings(appliancesTags);
+      uniqueAppliances.forEach((appliance) => {
+        applianceItem = document.createElement("li");
+        applianceItem.classList.add("tag");
+        applianceItem.textContent = appliance;
+        tagsWrapper[1].appendChild(applianceItem);
+      });
+    }
+    return tagsWrapper[1];
+  }
+
+  ustensils.forEach((ustensil) => {
+    ustensilsTags = [...ustensilsTags, ustensil];
+  });
+  function getUstensilsDOM() {
+    if (index === length - 1) {
+      let ustensilItem;
+      const uniqueUstensils = sortStrings(ustensilsTags);
+      uniqueUstensils.forEach((ustensil) => {
+        ustensilItem = document.createElement("li");
+        ustensilItem.classList.add("tag");
+        ustensilItem.textContent = ustensil;
+        tagsWrapper[2].appendChild(ustensilItem);
+      });
+    }
+    return tagsWrapper[2];
+  }
 
   return {
     getRecipeCardDOM,
     getIngredientsDOM,
+    getAppliancesDOM,
+    getUstensilsDOM,
   };
 }
