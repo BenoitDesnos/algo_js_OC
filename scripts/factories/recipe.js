@@ -74,7 +74,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueIngredients = sortStrings(ingredientsTags);
       uniqueIngredients.forEach((ingredient) => {
         ingredientItem = document.createElement("li");
-        ingredientItem.classList.add("tag");
+        ingredientItem.classList.add("tag", "ingredients");
         ingredientItem.textContent = ingredient;
         tagsWrapper[0].appendChild(ingredientItem);
       });
@@ -88,7 +88,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueAppliances = sortStrings(appliancesTags);
       uniqueAppliances.forEach((appliance) => {
         applianceItem = document.createElement("li");
-        applianceItem.classList.add("tag");
+        applianceItem.classList.add("tag", "appliances");
         applianceItem.textContent = appliance;
         tagsWrapper[1].appendChild(applianceItem);
       });
@@ -105,7 +105,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueUstensils = sortStrings(ustensilsTags);
       uniqueUstensils.forEach((ustensil) => {
         ustensilItem = document.createElement("li");
-        ustensilItem.classList.add("tag");
+        ustensilItem.classList.add("tag", "ustensils");
         ustensilItem.textContent = ustensil;
         tagsWrapper[2].appendChild(ustensilItem);
       });
