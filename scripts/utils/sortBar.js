@@ -1,80 +1,113 @@
+// tout mettre dans un tableau (dataset ou autre) et effectuer le tri dessus ainsi que l'affichage
+
 const searchBar = document.getElementById("search__bar");
- 
- function handleFilter(e, stringProps) {
-   const recipeInfosContainer = document.querySelectorAll(
-     ".recipe__infos__container"
-   );
-   let searchedString = e ? e.target.value : stringProps;
-   let ingredientsAvailable = [];
-   recipeInfosContainer.forEach((container) => {
-     // variables
-     let doesStringMatches = false;
-     let titleString = container.querySelector(".recipe__title").textContent;
-     let descriptionString = container.querySelector(
-       ".recipe__description"
-     ).textContent;
-     let ingredientsString = returnIngredientsByContainer(container);
+let itemsAvailable = [];
 
-     // toggle doesStringMatches
+function handleFilter(e, stringProps) {
+  const recipeInfosContainer = document.querySelectorAll(
+    ".recipe__infos__container"
+  );
+  let isSearchByTag = false;
+  if (e) {
+    var searchedString = e.target.value;
+  } else {
+    var searchedString = stringProps;
+    isSearchByTag = true;
+  }
+  console.log(searchedString);
+  itemsAvailable = [];
+  recipeInfosContainer.forEach((container) => {
+    // variables
+    let doesStringMatches = false;
+    let titleString = container.querySelector(".recipe__title").textContent;
+    let descriptionString = container.querySelector(
+      ".recipe__description"
+    ).textContent;
+    let ingredientsString = returnIngredientsByContainer(container);
 
-     makeStringCaseAndAccentInsensitive(
-       titleString,
-       ingredientsString,
-       descriptionString
-     ).forEach((string) => {
-       if (!doesStringMatches) {
-         string.includes(makeStringCaseAndAccentInsensitive(searchedString)) ===
-         false
-           ? (doesStringMatches = false)
-           : (doesStringMatches = true);
-       }
-     });
+    // toggle doesStringMatches
 
-     // display container or not according to doesStringMatches and inputLength
-     if (!doesStringMatches && searchedString.length >= 3) {
-       container.closest(".recipe__wrapper").style.display = "none";
-       container.closest(".recipe__wrapper").classList.remove("test");
-     } else if (container.closest(".test") && doesStringMatches) {
-       container.closest(".recipe__wrapper").style.display = "block";
-       let ingredients = container.querySelectorAll(".ingredient");
+    makeStringCaseAndAccentInsensitive(
+      titleString,
+      ingredientsString,
+      descriptionString
+    ).forEach((string) => {
+      if (!doesStringMatches) {
+        string.includes(makeStringCaseAndAccentInsensitive(searchedString)) ===
+        false
+          ? (doesStringMatches = false)
+          : (doesStringMatches = true);
+      }
+    });
 
-       ingredients.forEach((ingredient) => {
-         console.log(ingredient.textContent);
+    switch (isSearchByTag) {
+      case true:
+        if (searchedString.length >= 3) {
+          if (!doesStringMatches && container.closest(".display")) {
+            console.log(container.closest(".hidden"));
+            container.closest(".recipe__wrapper").classList.add("hidden");
+            container.closest(".recipe__wrapper").classList.remove("display");
+          } else if (container.closest(".display") && doesStringMatches) {
+            returnItemsAvailable(container);
+            container.closest(".recipe__wrapper").classList.remove("hidden");
+            container.closest(".recipe__wrapper").classList.add("display");
+          }
+          if (
+            container.closest(".hidden") &&
+            container.closest(".hidden").style.display === "block"
+          ) {
+            container.closest(".hidden").style.display = "none";
+          }
+        }
+        break;
+      case false:
+        if (
+          container.closest(".display") &&
+          !doesStringMatches &&
+          searchedString.length >= 3
+        ) {
+          container.closest(".recipe__wrapper").style.display = "none";
+        } else if (container.closest(".display")) {
+          container.closest(".recipe__wrapper").style.display = "block";
+        }
 
-         ingredientsAvailable = [
-           ...ingredientsAvailable,
-           ingredient.textContent,
-         ];
-       });
-     } else if (doesStringMatches) {
-       container.closest(".recipe__wrapper").classList.add("test");
-     }
-   });
-   /* updateList(ustensilsAvailable, "ustensils");
-       updateList(appliancesAvailable, "appliances"); */
-   updateList(ingredientsAvailable, "ingredients");
- }
+        break;
 
- searchBar.addEventListener("input", handleFilter);
+      default:
+        break;
+    }
 
- function updateList(arr, type) {
-   const ingredientsDisplayed = document.querySelectorAll(
-     `.${type} + .display`
-   );
+    // display container or not according to doesStringMatches and inputLength
+  });
 
-   ingredientsDisplayed.forEach((ingredient) => {
-     let isMatched = false;
-     for (let i = 0; i < arr.length; i++) {
-       if (!isMatched) {
-         if (ingredient.textContent === arr[i]) {
-           ingredient.classList.add("display");
-           ingredient.classList.remove("hidden");
-           isMatched = true;
-         } else if (ingredient.textContent !== arr[i]) {
-           ingredient.classList.add("hidden");
-           ingredient.classList.remove("display");
-         }
-       }
-     }
-   });
- }
+  updateList(itemsAvailable);
+}
+
+searchBar.addEventListener("input", handleFilter);
+
+function updateList(arr) {
+  const itemListDisplayed = document.querySelectorAll(`[data-type]`);
+
+  itemListDisplayed.forEach((item) => {
+    let isMatched = false;
+    for (let i = 0; i < arr.length; i++) {
+      if (!isMatched) {
+        if (item.textContent.toLowerCase() === arr[i].toLowerCase()) {
+          item.classList.add("display");
+          item.classList.remove("hidden");
+          isMatched = true;
+        } else if (item.textContent !== arr[i]) {
+          item.classList.add("hidden");
+          item.classList.remove("display");
+        }
+      }
+    }
+  });
+}
+
+function returnItemsAvailable(container) {
+  const items = container.getAttribute(`data-stock`).split(",");
+  items.forEach((el) => {
+    itemsAvailable = [...itemsAvailable, el];
+  });
+}

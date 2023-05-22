@@ -15,7 +15,8 @@ function recipeFactory(recipe, index, length) {
 
   const cardInfos = document.createElement("section");
   cardInfos.classList.add("recipe__wrapper");
-  cardInfos.classList.add("test");
+  cardInfos.classList.add("display");
+
   const cardImgContainer = document.createElement("div");
   cardImgContainer.classList.add("recipe__image__container");
   const cardInfosContainer = document.createElement("div");
@@ -42,8 +43,12 @@ function recipeFactory(recipe, index, length) {
   cardInfosRecipe.classList.add("recipe__ingredients");
 
   let cardInfosingredient;
-  ingredients.forEach((recipe) => {
+  let ingredientsString = "";
+  ingredients.forEach((recipe, indexIngredients) => {
     const { ingredient, quantity, unit } = recipe;
+    indexIngredients !== ingredients.length - 1
+      ? (ingredientsString += ingredient + ",")
+      : (ingredientsString += ingredient);
     cardInfosingredient = document.createElement("li");
     cardInfosingredient.classList.add("recipe__ingredient");
     cardInfosingredient.innerHTML = `<span><strong class="ingredient">${ingredient}</strong>${
@@ -51,6 +56,13 @@ function recipeFactory(recipe, index, length) {
     }${unit ? unit : ""}</span>`;
     cardInfosRecipe.appendChild(cardInfosingredient);
   });
+  cardInfosContainer.setAttribute(
+    "data-stock",
+    `${ingredientsString},${ustensils},${appliance}`,
+    ustensils,
+    appliance
+  );
+
   const cardInfosDescription = document.createElement("p");
   cardInfosDescription.classList.add("recipe__description");
   cardInfosDescription.textContent = description;
@@ -76,6 +88,7 @@ function recipeFactory(recipe, index, length) {
       uniqueIngredients.forEach((ingredient) => {
         ingredientItem = document.createElement("li");
         ingredientItem.classList.add("tag", "ingredients", "display"); // do not change order of classes
+        ingredientItem.setAttribute("data-type", "ingredient");
         ingredientItem.textContent = ingredient;
         tagsWrapper[0].appendChild(ingredientItem);
       });
@@ -90,6 +103,7 @@ function recipeFactory(recipe, index, length) {
       uniqueAppliances.forEach((appliance) => {
         applianceItem = document.createElement("li");
         applianceItem.classList.add("tag", "appliances", "display"); // do not change order of classes
+        applianceItem.setAttribute("data-type", "appliance");
         applianceItem.textContent = appliance;
         tagsWrapper[1].appendChild(applianceItem);
       });
@@ -107,6 +121,7 @@ function recipeFactory(recipe, index, length) {
       uniqueUstensils.forEach((ustensil) => {
         ustensilItem = document.createElement("li");
         ustensilItem.classList.add("tag", "ustensils", "display"); // do not change order of classes
+        ustensilItem.setAttribute("data-type", "ustensil");
         ustensilItem.textContent = ustensil;
         tagsWrapper[2].appendChild(ustensilItem);
       });

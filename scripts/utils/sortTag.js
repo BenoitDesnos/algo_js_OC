@@ -1,6 +1,5 @@
 const searchTagsWrapper = document.getElementById("search__tags__wrapper");
 const selectedTagsWrapper = document.getElementById("selected__tags__wrapper");
-const regex = /^(?!.*\btag\b.*\btag\b).*\btag\b.*$/gm; // match tag only once
 
 searchTagsWrapper.addEventListener("click", (e) => {
   const target = e.target;
@@ -26,16 +25,16 @@ searchTagsWrapper.addEventListener("click", (e) => {
       input.focus();
     }
   }
-  if (target.className.match(regex)) {
-    const typeOfTag = target.classList[1];
+  if (target.dataset.type) {
+    const typeOfTag = target.dataset.type;
     const selectedTagsWrapperType = document.getElementById(
-      `selected__tags__wrapper__${typeOfTag}`
+      `selected__tags__wrapper__${typeOfTag}s`
     );
-    console.log(selectedTagsWrapperType);
+
     let tag = document.createElement("li");
     tag.textContent = target.textContent;
-    tag.classList.add("selected__tags", typeOfTag);
-    handleFilter(null, target.textContent);
+    tag.classList.add("selected__tags", typeOfTag + "s");
+    handleFilter(null, target.textContent, typeOfTag);
     selectedTagsWrapperType.appendChild(tag);
   }
 });
@@ -45,7 +44,22 @@ selectedTagsWrapper.addEventListener("click", (e) => {
   const selectedTag = target.closest(".selected__tags");
   if (selectedTag) {
     selectedTag.remove();
+    const selectedTags = document.querySelectorAll(".selected__tags");
+    console.log(selectedTags);
+    resetFilters();
+    selectedTags.forEach((tag) => {
+      handleFilter(null, tag.textContent);
+    });
   }
 });
 
-
+function resetFilters() {
+  const recipeInfosContainer = document.querySelectorAll(
+    ".recipe__infos__container"
+  );
+  console.log("test");
+  recipeInfosContainer.forEach((container) => {
+    container.closest(".recipe__wrapper").classList.remove("hidden");
+    container.closest(".recipe__wrapper").classList.add("display");
+  });
+}

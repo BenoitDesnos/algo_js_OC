@@ -1,8 +1,8 @@
 fetch("../../mockData.json")
   .then((response) => response.json())
-  .then((data) => dsiplayRecipes(data));
+  .then((data) => displayRecipes(data));
 
-function dsiplayRecipes(recipes) {
+function displayRecipes(recipes) {
   const recipesSection = document.getElementById("recipes__wrapper");
   const ingredientsSection = document.getElementById(
     "search__tag__ingredients"
