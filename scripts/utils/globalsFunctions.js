@@ -1,3 +1,13 @@
+function returnIngredientsByContainer(container) {
+  let ingredientString = "";
+  let result = "";
+  ingredients = container.querySelectorAll(".ingredient");
+  ingredients.forEach((ingredient) => {
+    result += ingredientString.concat(ingredient.textContent, " ");
+  });
+  return result;
+}
+
 // change strings format to case and accent insensitive
 function makeStringCaseAndAccentInsensitive(...parameter) {
   return parameter.map((prop) => {
@@ -16,6 +26,7 @@ const sortStrings = (arr) => {
   const transformedArr = arr.map((str) =>
     str.toLowerCase().replace(/[^a-z0-9]/gi, "")
   );
+
   const uniqueArr = transformedArr.filter(
     (str, index) => transformedArr.indexOf(str) === index
   );

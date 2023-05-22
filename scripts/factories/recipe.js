@@ -15,6 +15,7 @@ function recipeFactory(recipe, index, length) {
 
   const cardInfos = document.createElement("section");
   cardInfos.classList.add("recipe__wrapper");
+  cardInfos.classList.add("test");
   const cardImgContainer = document.createElement("div");
   cardImgContainer.classList.add("recipe__image__container");
   const cardInfosContainer = document.createElement("div");
@@ -74,7 +75,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueIngredients = sortStrings(ingredientsTags);
       uniqueIngredients.forEach((ingredient) => {
         ingredientItem = document.createElement("li");
-        ingredientItem.classList.add("tag", "ingredients");
+        ingredientItem.classList.add("tag", "ingredients", "display"); // do not change order of classes
         ingredientItem.textContent = ingredient;
         tagsWrapper[0].appendChild(ingredientItem);
       });
@@ -88,7 +89,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueAppliances = sortStrings(appliancesTags);
       uniqueAppliances.forEach((appliance) => {
         applianceItem = document.createElement("li");
-        applianceItem.classList.add("tag", "appliances");
+        applianceItem.classList.add("tag", "appliances", "display"); // do not change order of classes
         applianceItem.textContent = appliance;
         tagsWrapper[1].appendChild(applianceItem);
       });
@@ -105,7 +106,7 @@ function recipeFactory(recipe, index, length) {
       const uniqueUstensils = sortStrings(ustensilsTags);
       uniqueUstensils.forEach((ustensil) => {
         ustensilItem = document.createElement("li");
-        ustensilItem.classList.add("tag", "ustensils");
+        ustensilItem.classList.add("tag", "ustensils", "display"); // do not change order of classes
         ustensilItem.textContent = ustensil;
         tagsWrapper[2].appendChild(ustensilItem);
       });

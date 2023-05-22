@@ -28,11 +28,15 @@ searchTagsWrapper.addEventListener("click", (e) => {
   }
   if (target.className.match(regex)) {
     const typeOfTag = target.classList[1];
+    const selectedTagsWrapperType = document.getElementById(
+      `selected__tags__wrapper__${typeOfTag}`
+    );
+    console.log(selectedTagsWrapperType);
     let tag = document.createElement("li");
     tag.textContent = target.textContent;
     tag.classList.add("selected__tags", typeOfTag);
-    selectedTagsWrapper.appendChild(tag);
-    console.log(tag, target.classList[1]);
+    handleFilter(null, target.textContent);
+    selectedTagsWrapperType.appendChild(tag);
   }
 });
 
@@ -43,3 +47,5 @@ selectedTagsWrapper.addEventListener("click", (e) => {
     selectedTag.remove();
   }
 });
+
+
