@@ -45,10 +45,8 @@ selectedTagsWrapper.addEventListener("click", (e) => {
   if (selectedTag) {
     selectedTag.remove();
     const selectedTags = document.querySelectorAll(".selected__tags");
-    console.log(selectedTags);
     resetFilters();
     if (selectedTags.length > 0) {
-      console.log("selectedTags.length > 0");
       selectedTags.forEach((tag) => {
         handleFilter(null, tag.textContent);
       });

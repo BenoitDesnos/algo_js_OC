@@ -1,12 +1,14 @@
 // tout mettre dans un tableau (dataset ou autre) et effectuer le tri dessus ainsi que l'affichage
 
 const searchBar = document.getElementById("search__bar");
-let itemsAvailable = [];
+let itemsToDisplay = [];
 
 function handleFilter(e, stringProps) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
+  const selectedTags = document.querySelector(".selected__tags");
+  console.log(!!selectedTags);
   let isSearchByTag = false;
   if (e) {
     var searchedString = e.target.value;
@@ -15,95 +17,53 @@ function handleFilter(e, stringProps) {
     isSearchByTag = true;
   }
 
-  itemsAvailable = [];
+  itemsToDisplay = [];
   recipeInfosContainer.forEach((container) => {
     // variables
-    let doesStringMatches = false;
-    let titleString = container.querySelector(".recipe__title").textContent;
-    let descriptionString = container.querySelector(
-      ".recipe__description"
-    ).textContent;
-    let ingredientsString = returnIngredientsByContainer(container);
+    const data = container.getAttribute(`data-stock`);
 
     // toggle doesStringMatches
 
-    makeStringCaseAndAccentInsensitive(
-      titleString,
-      ingredientsString,
-      descriptionString
-    ).forEach((string) => {
-      if (!doesStringMatches) {
-        string.includes(makeStringCaseAndAccentInsensitive(searchedString)) ===
-        false
-          ? (doesStringMatches = false)
-          : (doesStringMatches = true);
-      }
-    });
+    const doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
+      makeStringCaseAndAccentInsensitive(searchedString)
+    );
 
     switch (isSearchByTag) {
       case true:
-        if (searchedString.length >= 3) {
-          if (!doesStringMatches && container.closest(".display")) {
-            container.closest(".recipe__wrapper").classList.add("hidden");
-            container.closest(".recipe__wrapper").classList.remove("display");
-          } else if (container.closest(".display") && doesStringMatches) {
-            returnItemsAvailable(container);
-            container.closest(".recipe__wrapper").classList.remove("hidden");
-            container.closest(".recipe__wrapper").classList.add("display");
-          }
-          if (
-            container.closest(".hidden") &&
-            container.closest(".hidden").style.display === "block"
-          ) {
-            container.closest(".hidden").style.display = "none";
-          }
-        }
+        searchByTag(searchedString, container, doesStringMatches);
         break;
       case false:
-        if (
-          container.closest(".display") &&
-          !doesStringMatches &&
-          searchedString.length >= 3
-        ) {
-          container.closest(".recipe__wrapper").style.display = "none";
-        } else if (container.closest(".display")) {
-          container.closest(".recipe__wrapper").style.display = "block";
-        }
-
+        searchByInput(searchedString, container, doesStringMatches);
         break;
 
       default:
         break;
     }
-
-    // display container or not according to doesStringMatches and inputLength
   });
-
-  updateList(itemsAvailable, false);
+  updateList(itemsToDisplay, false);
 }
 
 searchBar.addEventListener("input", handleFilter);
 
-function updateList(arr, resetList) {
-  const itemListDisplayed = document.querySelectorAll(`[data-type]`);
-
-  itemListDisplayed.forEach((item) => {
+function updateList(itemsToDisplay, resetList) {
+  const allTags = document.querySelectorAll(`[data-type]`);
+  allTags.forEach((tag) => {
     let isMatched = false;
     if (resetList) {
-      console.log("resetList");
-      item.classList.add("display");
-      item.classList.remove("hidden");
+      tag.classList.add("display");
+      tag.classList.remove("hidden");
     } else {
-      console.log("updateList");
-      for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < itemsToDisplay.length; i++) {
         if (!isMatched) {
-          if (item.textContent.toLowerCase() === arr[i].toLowerCase()) {
-            item.classList.add("display");
-            item.classList.remove("hidden");
+          if (
+            tag.textContent.toLowerCase() === itemsToDisplay[i].toLowerCase()
+          ) {
+            tag.classList.add("display");
+            tag.classList.remove("hidden");
             isMatched = true;
-          } else if (item.textContent !== arr[i]) {
-            item.classList.add("hidden");
-            item.classList.remove("display");
+          } else if (tag.textContent !== itemsToDisplay[i]) {
+            tag.classList.add("hidden");
+            tag.classList.remove("display");
           }
         }
       }
@@ -114,6 +74,6 @@ function updateList(arr, resetList) {
 function returnItemsAvailable(container) {
   const items = container.getAttribute(`data-stock`).split(",");
   items.forEach((el) => {
-    itemsAvailable = [...itemsAvailable, el];
+    itemsToDisplay = [...itemsToDisplay, el];
   });
 }

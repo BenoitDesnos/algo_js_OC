@@ -9,13 +9,11 @@ function returnIngredientsByContainer(container) {
 }
 
 // change strings format to case and accent insensitive
-function makeStringCaseAndAccentInsensitive(...parameter) {
-  return parameter.map((prop) => {
-    return prop
-      .toLocaleLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
-  });
+function makeStringCaseAndAccentInsensitive(prop) {
+  return prop
+    .toLocaleLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 function capitalizeFirstLetter(string) {
@@ -40,3 +38,35 @@ const sortStrings = (arr) => {
 
   return originalArrayCapitalized;
 };
+
+function searchByTag(searchedString, container, doesStringMatches) {
+  if (searchedString.length >= 3) {
+    if (!doesStringMatches && container.closest(".display")) {
+      container.closest(".recipe__wrapper").classList.add("hidden");
+      container.closest(".recipe__wrapper").classList.remove("display");
+    } else if (container.closest(".display") && doesStringMatches) {
+      returnItemsAvailable(container);
+      container.closest(".recipe__wrapper").classList.remove("hidden");
+      container.closest(".recipe__wrapper").classList.add("display");
+    }
+    if (
+      container.closest(".hidden") &&
+      container.closest(".hidden").style.display === "block"
+    ) {
+      container.closest(".hidden").style.display = "none";
+    }
+  }
+}
+
+function searchByInput(searchedString, container, doesStringMatches) {
+  if (
+    container.closest(".display") &&
+    !doesStringMatches &&
+    searchedString.length >= 3
+  ) {
+    container.closest(".recipe__wrapper").style.display = "none";
+  } else if (container.closest(".display")) {
+    returnItemsAvailable(container);
+    container.closest(".recipe__wrapper").style.display = "block";
+  }
+}
