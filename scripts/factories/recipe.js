@@ -58,9 +58,7 @@ function recipeFactory(recipe, index, length) {
   });
   cardInfosContainer.setAttribute(
     "data-stock",
-    `${ingredientsString},${ustensils},${appliance}`,
-    ustensils,
-    appliance
+    `${name},${ingredientsString},${ustensils},${appliance}, ${description}`
   );
 
   const cardInfosDescription = document.createElement("p");

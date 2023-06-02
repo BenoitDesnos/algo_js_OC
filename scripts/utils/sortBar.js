@@ -14,7 +14,7 @@ function handleFilter(e, stringProps) {
     var searchedString = stringProps;
     isSearchByTag = true;
   }
-  console.log(searchedString);
+
   itemsAvailable = [];
   recipeInfosContainer.forEach((container) => {
     // variables
@@ -44,7 +44,6 @@ function handleFilter(e, stringProps) {
       case true:
         if (searchedString.length >= 3) {
           if (!doesStringMatches && container.closest(".display")) {
-            console.log(container.closest(".hidden"));
             container.closest(".recipe__wrapper").classList.add("hidden");
             container.closest(".recipe__wrapper").classList.remove("display");
           } else if (container.closest(".display") && doesStringMatches) {
@@ -80,25 +79,32 @@ function handleFilter(e, stringProps) {
     // display container or not according to doesStringMatches and inputLength
   });
 
-  updateList(itemsAvailable);
+  updateList(itemsAvailable, false);
 }
 
 searchBar.addEventListener("input", handleFilter);
 
-function updateList(arr) {
+function updateList(arr, resetList) {
   const itemListDisplayed = document.querySelectorAll(`[data-type]`);
 
   itemListDisplayed.forEach((item) => {
     let isMatched = false;
-    for (let i = 0; i < arr.length; i++) {
-      if (!isMatched) {
-        if (item.textContent.toLowerCase() === arr[i].toLowerCase()) {
-          item.classList.add("display");
-          item.classList.remove("hidden");
-          isMatched = true;
-        } else if (item.textContent !== arr[i]) {
-          item.classList.add("hidden");
-          item.classList.remove("display");
+    if (resetList) {
+      console.log("resetList");
+      item.classList.add("display");
+      item.classList.remove("hidden");
+    } else {
+      console.log("updateList");
+      for (let i = 0; i < arr.length; i++) {
+        if (!isMatched) {
+          if (item.textContent.toLowerCase() === arr[i].toLowerCase()) {
+            item.classList.add("display");
+            item.classList.remove("hidden");
+            isMatched = true;
+          } else if (item.textContent !== arr[i]) {
+            item.classList.add("hidden");
+            item.classList.remove("display");
+          }
         }
       }
     }

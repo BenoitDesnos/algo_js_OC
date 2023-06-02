@@ -47,9 +47,14 @@ selectedTagsWrapper.addEventListener("click", (e) => {
     const selectedTags = document.querySelectorAll(".selected__tags");
     console.log(selectedTags);
     resetFilters();
-    selectedTags.forEach((tag) => {
-      handleFilter(null, tag.textContent);
-    });
+    if (selectedTags.length > 0) {
+      console.log("selectedTags.length > 0");
+      selectedTags.forEach((tag) => {
+        handleFilter(null, tag.textContent);
+      });
+    } else {
+      updateList(null, true);
+    }
   }
 });
 
@@ -57,7 +62,7 @@ function resetFilters() {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
-  console.log("test");
+
   recipeInfosContainer.forEach((container) => {
     container.closest(".recipe__wrapper").classList.remove("hidden");
     container.closest(".recipe__wrapper").classList.add("display");
