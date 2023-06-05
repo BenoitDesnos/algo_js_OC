@@ -64,8 +64,12 @@ function resetFilters() {
 
   if (searchBar.value.length <= 2) {
     recipeInfosContainer.forEach((container) => {
-      container.closest(".recipe__wrapper").classList.remove("hidden");
-      container.closest(".recipe__wrapper").classList.add("display");
+      displayContainer(container);
     });
+    console.log("test1");
+  } else {
+    handleFilter(searchBar.value, false);
+    console.log("test2");
   }
 }
+

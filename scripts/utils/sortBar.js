@@ -7,17 +7,14 @@ function handleFilter(value, isSearchByTag) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
-  console.log(isSearchByTag, "searchByTag");
-  const selectedTags = document.querySelector(".selected__tags");
 
   itemsToDisplay = [];
   amountOfRecipes = 0;
+
   recipeInfosContainer.forEach((container) => {
-    // variables
     const data = container.getAttribute(`data-stock`);
 
     // toggle doesStringMatches
-
     const doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
       makeStringCaseAndAccentInsensitive(value)
     );
@@ -36,7 +33,8 @@ function handleFilter(value, isSearchByTag) {
     if (container.closest(".display") && value.length >= 3) {
       amountOfRecipes++;
       amountOfRecipesDisplayed.textContent = amountOfRecipes;
-    } else if (value.length < 3) {
+    } else if (container.closest(".display") && value.length < 3) {
+      amountOfRecipes++;
       amountOfRecipesDisplayed.textContent = recipeInfosContainer.length;
     }
   });
