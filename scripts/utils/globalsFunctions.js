@@ -40,49 +40,44 @@ const sortStrings = (arr) => {
 };
 
 function searchByTag(searchedString, container, doesStringMatches) {
-  console.log("---------------");
-  console.log(searchedString, container, doesStringMatches);
-
   if (!doesStringMatches && container.closest(".display")) {
-    container.closest(".recipe__wrapper").classList.add("hidden");
-    container.closest(".recipe__wrapper").classList.remove("display");
+    hidContainer(container);
   } else if (container.closest(".display") && doesStringMatches) {
     updateItemsAvailable(container);
-    container.closest(".recipe__wrapper").classList.remove("hidden");
-    container.closest(".recipe__wrapper").classList.add("display");
+    displayContainer(container);
   }
 }
 
 function searchByInput(searchedString, container, doesStringMatches) {
   const selectedTags = document.querySelector(".selected__tags");
   const isOneTagSelected = !!selectedTags;
-  console.log("**************");
-  console.log(searchedString, container, doesStringMatches);
+
   if (
     container.closest(".display") &&
     !doesStringMatches &&
     searchedString.length >= 3
   ) {
-    container.closest(".recipe__wrapper").classList.add("hidden");
-    container.closest(".recipe__wrapper").classList.remove("display");
+    hidContainer(container);
   } else if (isOneTagSelected) {
-    /* console.log(
-      !!container.closest(".hidden"),
-      !doesStringMatches,
-      searchedString.length >= 3
-    ); */
     if (
       container.closest(".hidden") &&
       doesStringMatches &&
       searchedString.length >= 3
     ) {
-      /* console.log(container); */
-      container.closest(".recipe__wrapper").classList.add("hidden");
-      container.closest(".recipe__wrapper").classList.remove("display");
+      hidContainer(container);
     }
   } else if (container.closest(".hidden") && doesStringMatches) {
     updateItemsAvailable(container);
-    container.closest(".recipe__wrapper").classList.add("display");
-    container.closest(".recipe__wrapper").classList.remove("hidden");
+    displayContainer(container);
   }
+}
+
+function displayContainer(container) {
+  container.closest(".recipe__wrapper").classList.remove("hidden");
+  container.closest(".recipe__wrapper").classList.add("display");
+}
+
+function hidContainer(container) {
+  container.closest(".recipe__wrapper").classList.remove("display");
+  container.closest(".recipe__wrapper").classList.add("hidden");
 }
