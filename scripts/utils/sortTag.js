@@ -34,7 +34,7 @@ searchTagsWrapper.addEventListener("click", (e) => {
     let tag = document.createElement("li");
     tag.textContent = target.textContent;
     tag.classList.add("selected__tags", typeOfTag + "s");
-    handleFilter(null, target.textContent, typeOfTag);
+    handleFilter(tag.textContent, true);
     selectedTagsWrapperType.appendChild(tag);
   }
 });
@@ -48,7 +48,7 @@ selectedTagsWrapper.addEventListener("click", (e) => {
     resetFilters();
     if (selectedTags.length > 0) {
       selectedTags.forEach((tag) => {
-        handleFilter(null, tag.textContent);
+        handleFilter(tag.textContent, true);
       });
     } else {
       updateList(null, true);
@@ -60,9 +60,12 @@ function resetFilters() {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
+  const searchBar = document.getElementById("search__bar");
 
-  recipeInfosContainer.forEach((container) => {
-    container.closest(".recipe__wrapper").classList.remove("hidden");
-    container.closest(".recipe__wrapper").classList.add("display");
-  });
+  if (searchBar.value.length <= 2) {
+    recipeInfosContainer.forEach((container) => {
+      container.closest(".recipe__wrapper").classList.remove("hidden");
+      container.closest(".recipe__wrapper").classList.add("display");
+    });
+  }
 }

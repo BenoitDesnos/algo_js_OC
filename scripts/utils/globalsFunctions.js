@@ -40,33 +40,49 @@ const sortStrings = (arr) => {
 };
 
 function searchByTag(searchedString, container, doesStringMatches) {
-  if (searchedString.length >= 3) {
-    if (!doesStringMatches && container.closest(".display")) {
-      container.closest(".recipe__wrapper").classList.add("hidden");
-      container.closest(".recipe__wrapper").classList.remove("display");
-    } else if (container.closest(".display") && doesStringMatches) {
-      returnItemsAvailable(container);
-      container.closest(".recipe__wrapper").classList.remove("hidden");
-      container.closest(".recipe__wrapper").classList.add("display");
-    }
-    if (
-      container.closest(".hidden") &&
-      container.closest(".hidden").style.display === "block"
-    ) {
-      container.closest(".hidden").style.display = "none";
-    }
+  console.log("---------------");
+  console.log(searchedString, container, doesStringMatches);
+
+  if (!doesStringMatches && container.closest(".display")) {
+    container.closest(".recipe__wrapper").classList.add("hidden");
+    container.closest(".recipe__wrapper").classList.remove("display");
+  } else if (container.closest(".display") && doesStringMatches) {
+    updateItemsAvailable(container);
+    container.closest(".recipe__wrapper").classList.remove("hidden");
+    container.closest(".recipe__wrapper").classList.add("display");
   }
 }
 
 function searchByInput(searchedString, container, doesStringMatches) {
+  const selectedTags = document.querySelector(".selected__tags");
+  const isOneTagSelected = !!selectedTags;
+  console.log("**************");
+  console.log(searchedString, container, doesStringMatches);
   if (
     container.closest(".display") &&
     !doesStringMatches &&
     searchedString.length >= 3
   ) {
-    container.closest(".recipe__wrapper").style.display = "none";
-  } else if (container.closest(".display")) {
-    returnItemsAvailable(container);
-    container.closest(".recipe__wrapper").style.display = "block";
+    container.closest(".recipe__wrapper").classList.add("hidden");
+    container.closest(".recipe__wrapper").classList.remove("display");
+  } else if (isOneTagSelected) {
+    /* console.log(
+      !!container.closest(".hidden"),
+      !doesStringMatches,
+      searchedString.length >= 3
+    ); */
+    if (
+      container.closest(".hidden") &&
+      doesStringMatches &&
+      searchedString.length >= 3
+    ) {
+      /* console.log(container); */
+      container.closest(".recipe__wrapper").classList.add("hidden");
+      container.closest(".recipe__wrapper").classList.remove("display");
+    }
+  } else if (container.closest(".hidden") && doesStringMatches) {
+    updateItemsAvailable(container);
+    container.closest(".recipe__wrapper").classList.add("display");
+    container.closest(".recipe__wrapper").classList.remove("hidden");
   }
 }

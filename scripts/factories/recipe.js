@@ -17,6 +17,8 @@ function recipeFactory(recipe, index, length) {
   cardInfos.classList.add("recipe__wrapper");
   cardInfos.classList.add("display");
 
+  amountOfRecipesDisplayed.textContent = length;
+
   const cardImgContainer = document.createElement("div");
   cardImgContainer.classList.add("recipe__image__container");
   const cardInfosContainer = document.createElement("div");

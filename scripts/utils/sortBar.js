@@ -1,23 +1,17 @@
-// tout mettre dans un tableau (dataset ou autre) et effectuer le tri dessus ainsi que l'affichage
+// Stocker les tags et input value dans un tableau et rejouer la fonction dès que le tableau change
 
 const searchBar = document.getElementById("search__bar");
 let itemsToDisplay = [];
-
-function handleFilter(e, stringProps) {
+let amountOfRecipes = 0;
+function handleFilter(value, isSearchByTag) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
+  console.log(isSearchByTag, "searchByTag");
   const selectedTags = document.querySelector(".selected__tags");
-  console.log(!!selectedTags);
-  let isSearchByTag = false;
-  if (e) {
-    var searchedString = e.target.value;
-  } else {
-    var searchedString = stringProps;
-    isSearchByTag = true;
-  }
 
   itemsToDisplay = [];
+  amountOfRecipes = 0;
   recipeInfosContainer.forEach((container) => {
     // variables
     const data = container.getAttribute(`data-stock`);
@@ -25,25 +19,32 @@ function handleFilter(e, stringProps) {
     // toggle doesStringMatches
 
     const doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
-      makeStringCaseAndAccentInsensitive(searchedString)
+      makeStringCaseAndAccentInsensitive(value)
     );
 
     switch (isSearchByTag) {
       case true:
-        searchByTag(searchedString, container, doesStringMatches);
+        searchByTag(value, container, doesStringMatches);
         break;
       case false:
-        searchByInput(searchedString, container, doesStringMatches);
+        searchByInput(value, container, doesStringMatches);
         break;
 
       default:
         break;
     }
+    if (container.closest(".display") && value.length >= 3) {
+      amountOfRecipes++;
+      amountOfRecipesDisplayed.textContent = amountOfRecipes;
+    } else if (value.length < 3) {
+      amountOfRecipesDisplayed.textContent = recipeInfosContainer.length;
+    }
   });
+
   updateList(itemsToDisplay, false);
 }
 
-searchBar.addEventListener("input", handleFilter);
+searchBar.addEventListener("input", (e) => handleFilter(e.target.value, false));
 
 function updateList(itemsToDisplay, resetList) {
   const allTags = document.querySelectorAll(`[data-type]`);
@@ -71,7 +72,7 @@ function updateList(itemsToDisplay, resetList) {
   });
 }
 
-function returnItemsAvailable(container) {
+function updateItemsAvailable(container) {
   const items = container.getAttribute(`data-stock`).split(",");
   items.forEach((el) => {
     itemsToDisplay = [...itemsToDisplay, el];
