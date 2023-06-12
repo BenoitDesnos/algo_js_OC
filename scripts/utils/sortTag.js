@@ -35,8 +35,8 @@ searchTagsWrapper.addEventListener("click", (e) => {
     tag.textContent = target.textContent;
     tag.classList.add("selected__tags", typeOfTag + "s");
     elementsToSortWith.push(tag.textContent);
-    console.log(elementsToSortWith);
-    handleFilter(true);
+
+    handleFilter(null);
     selectedTagsWrapperType.appendChild(tag);
   }
 });
@@ -47,7 +47,7 @@ selectedTagsWrapper.addEventListener("click", (e) => {
   if (selectedTag) {
     selectedTag.remove();
     removeElementToSortWith(selectedTag.textContent);
-    handleFilter(false);
+    handleFilter(null);
   }
 });
 
@@ -62,7 +62,7 @@ function resetFilters() {
       displayContainer(container);
     });
   } else {
-    handleFilter(searchBar.value, false);
+    handleFilter(null);
   }
 }
 

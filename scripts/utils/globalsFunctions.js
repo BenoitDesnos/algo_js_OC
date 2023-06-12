@@ -61,24 +61,16 @@ function searchByTag(container, doesStringMatches) {
 
 // Function to handle searching by input
 function searchByInput(container, doesStringMatches) {
-  if (!doesStringMatches && container.closest(".display")) {
+  if (!doesStringMatches) {
     hidContainer(container);
-  } else if (container.closest(".hidden") && doesStringMatches) {
+  } else if (doesStringMatches) {
     displayContainer(container);
-    const selectedTags = document.querySelectorAll(".selected__tags");
-    if (selectedTags.length > 0) {
-      selectedTags.forEach((tag) => {
-        handleFilter(tag.textContent, true);
-      });
-    } else {
-      updateList(null, true);
-    }
   }
 }
 
 // Function to display a container
 function displayContainer(container) {
-  updateItemsAvailable(container);
+  /* updateItemsAvailable(container); */
   container.closest(".recipe__wrapper").classList.remove("hidden");
   container.closest(".recipe__wrapper").classList.add("display");
 }
@@ -88,15 +80,15 @@ function hidContainer(container) {
   container.closest(".recipe__wrapper").classList.remove("display");
   container.closest(".recipe__wrapper").classList.add("hidden");
 }
-function sortWithTagsChosen() {
+/* function sortWithTagsChosen() {
   const selectedTags = document.querySelectorAll(".selected__tags");
   console.log("test");
   resetFilters();
   if (selectedTags.length > 0) {
     selectedTags.forEach((tag) => {
-      handleFilter(tag.textContent, true);
+      handleFilter(null);
     });
   } else {
     updateList(null, true);
   }
-}
+} */

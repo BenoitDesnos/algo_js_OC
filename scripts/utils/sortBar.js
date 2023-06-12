@@ -2,12 +2,35 @@
 const searchBar = document.getElementById("search__bar");
 let itemsToDisplay = [];
 let amountOfRecipes = 0;
+let oldString = null;
+function deleteFirstStringFromArray(array, stringToDelete) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (array[i] === stringToDelete) {
+      array.splice(i, 1);
+      break; // Exit the loop after deleting the first occurrence
+    }
+  }
 
+  return array;
+}
 // Function to handle filtering based on the input value and search type (tag or input)
-function handleFilter() {
+function handleFilter(string) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
+
+  if (string) {
+    !!oldString
+      ? deleteFirstStringFromArray(elementsToSortWith, oldString)
+      : console.log("oldstring is false");
+    if (string.length > 2) {
+      console.log(!!oldString);
+      elementsToSortWith.push(string);
+      oldString = string;
+    }
+  }
+
+  console.log(elementsToSortWith);
 
   recipeInfosContainer.forEach((container) => {
     const data = container.getAttribute("data-stock");
@@ -22,6 +45,15 @@ function handleFilter() {
       }
     });
     searchByTag(container, allElementsMatches);
+
+    /*  if (string !== null && container.closest(".display")) {
+      console.log(string);
+      doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
+        makeStringCaseAndAccentInsensitive(string)
+      );
+      console.log(doesStringMatches);
+      searchByInput(container.closest(".display"), doesStringMatches);
+    } */
   });
 
   /*  elementsToSortWith.push(value);
@@ -64,18 +96,20 @@ function handleFilter() {
 }
 
 // Add an event listener to the search bar to handle input changes
-searchBar.addEventListener("input", (e) => handleFilter(e.target.value, false));
+searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
 
 // Function to update the displayed list of tags based on the itemsToDisplay array
-function updateList(itemsToDisplay, resetList) {
+/* function updateList(itemsToDisplay, resetList) {
   const allTags = document.querySelectorAll("[data-type]");
   allTags.forEach((tag) => {
     let isMatched = false;
 
     // If resetList is true, display all tags
     if (resetList) {
+      console.log(searchBar.textContent);
       tag.classList.add("display");
       tag.classList.remove("hidden");
+      handleFilter();
     } else {
       // Otherwise, update the tags based on the itemsToDisplay array
       for (let i = 0; i < itemsToDisplay.length; i++) {
@@ -94,7 +128,7 @@ function updateList(itemsToDisplay, resetList) {
       }
     }
   });
-}
+} */
 
 // Function to update the items available based on the container data attribute
 function updateItemsAvailable(container) {
