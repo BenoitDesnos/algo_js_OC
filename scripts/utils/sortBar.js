@@ -35,7 +35,7 @@ function handleFilter(string) {
     displayFunction(container, allElementsMatches);
     displayAmountOfRecipes(amountOfRecipes);
   });
-
+  displayNoMatchMessage(amountOfRecipes, string);
   updateList(itemsToDisplay);
 }
 

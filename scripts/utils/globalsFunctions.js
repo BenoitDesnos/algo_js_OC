@@ -55,6 +55,21 @@ function displayFunction(container, allElementsMatches) {
 function displayAmountOfRecipes(amountOfRecipes) {
   amountOfRecipesDisplayed.textContent = amountOfRecipes;
 }
+function displayNoMatchMessage(amountOfRecipes, string) {
+  const recipesWrapper = document.getElementById("recipes__wrapper");
+  if (amountOfRecipes === 0) {
+    const div = document.createElement("div");
+    div.textContent = `Aucune recette ne contient ${string}. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+    div.id = "no-match-message"; // Add an ID to the created div for future reference
+    recipesWrapper.appendChild(div);
+  } else {
+    const existingDiv = document.getElementById("no-match-message");
+    if (existingDiv) {
+      existingDiv.remove();
+    }
+    // Handle other conditions or logic if needed
+  }
+}
 
 // Function to display a container
 function displayContainer(container) {
@@ -97,4 +112,3 @@ function updateItemsAvailable(container) {
     itemsToDisplay = [...itemsToDisplay, el];
   });
 }
-
