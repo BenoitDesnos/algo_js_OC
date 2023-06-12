@@ -35,7 +35,6 @@ searchTagsWrapper.addEventListener("click", (e) => {
     tag.textContent = target.textContent;
     tag.classList.add("selected__tags", typeOfTag + "s");
     elementsToSortWith.push(tag.textContent);
-
     handleFilter(null);
     selectedTagsWrapperType.appendChild(tag);
   }

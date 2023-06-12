@@ -3,35 +3,23 @@ const searchBar = document.getElementById("search__bar");
 let itemsToDisplay = [];
 let amountOfRecipes = 0;
 let oldString = null;
-function deleteFirstStringFromArray(array, stringToDelete) {
-  for (let i = array.length - 1; i >= 0; i--) {
-    if (array[i] === stringToDelete) {
-      array.splice(i, 1);
-      break; // Exit the loop after deleting the first occurrence
-    }
-  }
 
-  return array;
-}
 // Function to handle filtering based on the input value and search type (tag or input)
 function handleFilter(string) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
-
+  itemsToDisplay = [];
+  amountOfRecipes = 0;
   if (string) {
-    !!oldString
-      ? deleteFirstStringFromArray(elementsToSortWith, oldString)
-      : console.log("oldstring is false");
+    if (oldString) {
+      deleteFirstStringFromArray(elementsToSortWith, oldString);
+    }
     if (string.length > 2) {
-      console.log(!!oldString);
       elementsToSortWith.push(string);
       oldString = string;
     }
   }
-
-  console.log(elementsToSortWith);
-
   recipeInfosContainer.forEach((container) => {
     const data = container.getAttribute("data-stock");
     let doesStringMatches = false;
@@ -44,96 +32,13 @@ function handleFilter(string) {
         allElementsMatches = doesStringMatches;
       }
     });
-    searchByTag(container, allElementsMatches);
-
-    /*  if (string !== null && container.closest(".display")) {
-      console.log(string);
-      doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
-        makeStringCaseAndAccentInsensitive(string)
-      );
-      console.log(doesStringMatches);
-      searchByInput(container.closest(".display"), doesStringMatches);
-    } */
+    displayFunction(container, allElementsMatches);
+    displayAmountOfRecipes(amountOfRecipes);
   });
 
-  /*  elementsToSortWith.push(value);
-  console.log(elementsToSortWith);
-  itemsToDisplay = [];
-  amountOfRecipes = 0;
-
-  recipeInfosContainer.forEach((container) => {
-    const data = container.getAttribute("data-stock");
-
-    // Check if the input value matches the data string, case and accent insensitive
-    const doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
-      makeStringCaseAndAccentInsensitive(value)
-    );
-
-    // Handle search based on the search type (tag or input)
-    switch (isSearchByTag) {
-      case true:
-        searchByTag(container, doesStringMatches);
-        break;
-      case false:
-        searchByInput(container, doesStringMatches);
-        break;
-      default:
-        break;
-    }
-
-    // Update the amount of recipes displayed based on the input value length
-    if (container.closest(".display") && value.length >= 3) {
-      amountOfRecipes++;
-      amountOfRecipesDisplayed.textContent = amountOfRecipes;
-    } else if (container.closest(".display") && value.length < 3) {
-      amountOfRecipes++;
-      amountOfRecipesDisplayed.textContent = recipeInfosContainer.length;
-    }
-  });
-
-  // Update the displayed list of tags
-  updateList(itemsToDisplay, false); */
+  updateList(itemsToDisplay);
 }
 
 // Add an event listener to the search bar to handle input changes
 searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
 
-// Function to update the displayed list of tags based on the itemsToDisplay array
-/* function updateList(itemsToDisplay, resetList) {
-  const allTags = document.querySelectorAll("[data-type]");
-  allTags.forEach((tag) => {
-    let isMatched = false;
-
-    // If resetList is true, display all tags
-    if (resetList) {
-      console.log(searchBar.textContent);
-      tag.classList.add("display");
-      tag.classList.remove("hidden");
-      handleFilter();
-    } else {
-      // Otherwise, update the tags based on the itemsToDisplay array
-      for (let i = 0; i < itemsToDisplay.length; i++) {
-        if (!isMatched) {
-          if (
-            tag.textContent.toLowerCase() === itemsToDisplay[i].toLowerCase()
-          ) {
-            tag.classList.add("display");
-            tag.classList.remove("hidden");
-            isMatched = true;
-          } else if (tag.textContent !== itemsToDisplay[i]) {
-            tag.classList.add("hidden");
-            tag.classList.remove("display");
-          }
-        }
-      }
-    }
-  });
-} */
-
-// Function to update the items available based on the container data attribute
-function updateItemsAvailable(container) {
-  const items = container.getAttribute("data-stock").split(",");
-  items.forEach((el) => {
-    itemsToDisplay = [...itemsToDisplay, el];
-  });
-}
