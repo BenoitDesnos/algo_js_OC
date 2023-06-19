@@ -57,17 +57,29 @@ function displayAmountOfRecipes(amountOfRecipes) {
 }
 function displayNoMatchMessage(amountOfRecipes, string) {
   const recipesWrapper = document.getElementById("recipes__wrapper");
+  const existingErrorMessage = document.getElementById("no-match-message");
   if (amountOfRecipes === 0) {
-    const div = document.createElement("div");
-    div.textContent = `Aucune recette ne contient ${string}. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+    let div;
+    existingErrorMessage
+      ? (div = existingErrorMessage)
+      : (div = document.createElement("div"));
+
+    div.textContent = `Aucune recette ne contient « ${string} ». Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
     div.id = "no-match-message"; // Add an ID to the created div for future reference
     recipesWrapper.appendChild(div);
   } else {
-    const existingDiv = document.getElementById("no-match-message");
-    if (existingDiv) {
-      existingDiv.remove();
+    if (existingErrorMessage) {
+      existingErrorMessage.remove();
     }
     // Handle other conditions or logic if needed
+  }
+}
+function deleteNoMatchMessage() {
+  if (amountOfRecipes !== 0) {
+    const existingErrorMessage = document.getElementById("no-match-message");
+    if (existingErrorMessage) {
+      existingErrorMessage.remove();
+    }
   }
 }
 
@@ -95,7 +107,7 @@ function displayTag(tag) {
 // Function to update the displayed list of tags based on the itemsToDisplay array
 function updateList(inputValue, typeOfTag) {
   const allTags = document.querySelectorAll(`[data-type]`);
-  console.log(itemsToDisplay);
+
   allTags.forEach((tag) => {
     let isMatched = false;
     for (let i = 0; i < itemsToDisplay.length; i++) {
@@ -108,7 +120,7 @@ function updateList(inputValue, typeOfTag) {
         }
       }
     }
-    console.log(itemsToDisplay.length === 0);
+
     if (tag.dataset.type === typeOfTag) {
       if (
         inputValue &&

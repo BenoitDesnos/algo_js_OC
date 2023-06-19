@@ -27,6 +27,7 @@ function handleFilter(string) {
   while (i < recipeInfosContainer.length) {
     const container = recipeInfosContainer[i];
     const data = container.getAttribute("data-stock");
+
     let doesStringMatches = false;
     let allElementsMatches = true;
 
@@ -46,12 +47,12 @@ function handleFilter(string) {
     displayAmountOfRecipes(amountOfRecipes);
     i++;
   }
-
+  deleteNoMatchMessage();
   displayNoMatchMessage(amountOfRecipes, string);
   updateList();
 }
 
 // Add an event listener to the search bar to handle input changes
 searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
-searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
+
 
