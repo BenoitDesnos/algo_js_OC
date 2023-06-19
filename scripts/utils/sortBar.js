@@ -4,13 +4,15 @@ let itemsToDisplay = [];
 let amountOfRecipes = 0;
 let oldString = null;
 
-// Function to handle filtering based on the input value and search type (tag or input)
+
 function handleFilter(string) {
   const recipeInfosContainer = document.querySelectorAll(
     ".recipe__infos__container"
   );
+
   itemsToDisplay = [];
   amountOfRecipes = 0;
+
   if (string) {
     if (oldString) {
       deleteFirstStringFromArray(elementsToSortWith, oldString);
@@ -20,25 +22,36 @@ function handleFilter(string) {
       oldString = string;
     }
   }
-  recipeInfosContainer.forEach((container) => {
+
+  let i = 0;
+  while (i < recipeInfosContainer.length) {
+    const container = recipeInfosContainer[i];
     const data = container.getAttribute("data-stock");
     let doesStringMatches = false;
-    var allElementsMatches = true;
-    elementsToSortWith.forEach((element) => {
+    let allElementsMatches = true;
+
+    let j = 0;
+    while (j < elementsToSortWith.length) {
+      const element = elementsToSortWith[j];
       if (allElementsMatches) {
         doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
           makeStringCaseAndAccentInsensitive(element)
         );
         allElementsMatches = doesStringMatches;
       }
-    });
+      j++;
+    }
+
     displayFunction(container, allElementsMatches);
     displayAmountOfRecipes(amountOfRecipes);
-  });
+    i++;
+  }
+
   displayNoMatchMessage(amountOfRecipes, string);
-  updateList(itemsToDisplay);
+  updateList();
 }
 
 // Add an event listener to the search bar to handle input changes
+searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
 searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
 

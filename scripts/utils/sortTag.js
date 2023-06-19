@@ -10,19 +10,29 @@ searchTagsWrapper.addEventListener("click", (e) => {
     if (!input) {
       input = document.createElement("input");
       input.classList.add("tag__input");
-      input.setAttribute("placeholder", `Rechercher`);
+      input.setAttribute(
+        "placeholder",
+        `Rechercher ${target.closest("[data-type-of-tag]").dataset.typeOfTag}`
+      );
     }
     if (searchTag.className.includes("isOpen")) {
       searchTag.classList.add("isClosed");
       searchTag.classList.remove("isOpen");
       title.style.display = "block";
       input.remove();
+      updateList("", target.closest("[data-type-of-tag]").dataset.typeOfTag); // resetList
     } else {
       searchTag.classList.remove("isClosed");
       searchTag.classList.add("isOpen");
       title.style.display = "none";
       searchTag.insertBefore(input, searchTag.firstChild);
       input.focus();
+      input.addEventListener("input", (e) => {
+        updateList(
+          e.target.value,
+          e.target.closest("[data-type-of-tag]").dataset.typeOfTag
+        );
+      });
     }
   }
   if (target.dataset.type) {
@@ -64,4 +74,6 @@ function resetFilters() {
     handleFilter(null);
   }
 }
+
+function name(params) {}
 

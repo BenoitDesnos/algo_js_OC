@@ -83,25 +83,43 @@ function hidContainer(container) {
   container.closest(".recipe__wrapper").classList.remove("display");
   container.closest(".recipe__wrapper").classList.add("hidden");
 }
+function hidTag(tag) {
+  tag.classList.add("hidden");
+  tag.classList.remove("display");
+}
+function displayTag(tag) {
+  tag.classList.add("display");
+  tag.classList.remove("hidden");
+}
 
 // Function to update the displayed list of tags based on the itemsToDisplay array
-function updateList(itemsToDisplay) {
-  const allTags = document.querySelectorAll("[data-type]");
+function updateList(inputValue, typeOfTag) {
+  const allTags = document.querySelectorAll(`[data-type]`);
+  console.log(itemsToDisplay);
   allTags.forEach((tag) => {
     let isMatched = false;
-    // Otherwise, update the tags based on the itemsToDisplay array
     for (let i = 0; i < itemsToDisplay.length; i++) {
       if (!isMatched) {
         if (tag.textContent.toLowerCase() === itemsToDisplay[i].toLowerCase()) {
-          tag.classList.add("display");
-          tag.classList.remove("hidden");
+          displayTag(tag);
           isMatched = true;
         } else if (tag.textContent !== itemsToDisplay[i]) {
-          tag.classList.add("hidden");
-          tag.classList.remove("display");
+          hidTag(tag);
         }
       }
     }
+    console.log(itemsToDisplay.length === 0);
+    if (tag.dataset.type === typeOfTag) {
+      if (
+        inputValue &&
+        !tag.textContent.toLowerCase().includes(inputValue.toLowerCase())
+      ) {
+        hidTag(tag);
+      } else if (itemsToDisplay.length === 0) {
+        displayTag(tag);
+      }
+    }
+    // Check inputValue to display/hide the tag
   });
 }
 
