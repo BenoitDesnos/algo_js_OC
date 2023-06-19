@@ -44,9 +44,19 @@ searchTagsWrapper.addEventListener("click", (e) => {
     let tag = document.createElement("li");
     tag.textContent = target.textContent;
     tag.classList.add("selected__tags", typeOfTag + "s");
-    elementsToSortWith.push(tag.textContent);
-    handleFilter(null);
-    selectedTagsWrapperType.appendChild(tag);
+    let isElementAlreadyPresent = false;
+    elementsToSortWith.forEach((element) => {
+      if (!isElementAlreadyPresent) {
+        if (tag.textContent === element) {
+          isElementAlreadyPresent = true;
+        }
+      }
+    });
+    if (!isElementAlreadyPresent) {
+      elementsToSortWith.push(tag.textContent);
+      selectedTagsWrapperType.appendChild(tag);
+    }
+    handleFilter();
   }
 });
 
@@ -56,7 +66,7 @@ selectedTagsWrapper.addEventListener("click", (e) => {
   if (selectedTag) {
     selectedTag.remove();
     removeElementToSortWith(selectedTag.textContent);
-    handleFilter(null);
+    handleFilter();
   }
 });
 
@@ -71,7 +81,7 @@ function resetFilters() {
       displayContainer(container);
     });
   } else {
-    handleFilter(null);
+    handleFilter();
   }
 }
 
