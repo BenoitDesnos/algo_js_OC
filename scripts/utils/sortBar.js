@@ -1,58 +1,18 @@
-// implement with searchBar
+// Get the search bar element
 const searchBar = document.getElementById("search__bar");
-let itemsToDisplay = [];
-let amountOfRecipes = 0;
-let oldString = null;
 
-
-function handleFilter(string) {
-  const recipeInfosContainer = document.querySelectorAll(
-    ".recipe__infos__container"
-  );
-
-  itemsToDisplay = [];
-  amountOfRecipes = 0;
-
-  if (string) {
-    if (oldString) {
-      deleteFirstStringFromArray(elementsToSortWith, oldString);
+// Function to add the search bar string to the sorting array
+function addSearchBarString(searchBarString) {
+  if (searchBarString) {
+    oldString && deleteLastStringFromArray(stringsToSortWith, oldString);
+    if (searchBarString.length > 2) {
+      stringsToSortWith.push(searchBarString);
+      oldString = searchBarString;
     }
-    if (string.length > 2) {
-      elementsToSortWith.push(string);
-      oldString = string;
-    }
+    handleFilter();
   }
-
-  let i = 0;
-  while (i < recipeInfosContainer.length) {
-    const container = recipeInfosContainer[i];
-    const data = container.getAttribute("data-stock");
-
-    let doesStringMatches = false;
-    let allElementsMatches = true;
-
-    let j = 0;
-    while (j < elementsToSortWith.length) {
-      const element = elementsToSortWith[j];
-      if (allElementsMatches) {
-        doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
-          makeStringCaseAndAccentInsensitive(element)
-        );
-        allElementsMatches = doesStringMatches;
-      }
-      j++;
-    }
-
-    displayFunction(container, allElementsMatches);
-    displayAmountOfRecipes(amountOfRecipes);
-    i++;
-  }
-  deleteNoMatchMessage();
-  displayNoMatchMessage(amountOfRecipes, string);
-  updateList();
 }
-
 // Add an event listener to the search bar to handle input changes
-searchBar.addEventListener("input", (e) => handleFilter(e.target.value));
-
-
+searchBar.addEventListener("input", (e) => {
+  addSearchBarString(e.target.value);
+});
