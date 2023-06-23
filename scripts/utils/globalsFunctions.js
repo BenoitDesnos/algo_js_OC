@@ -11,36 +11,27 @@ function handleFilter() {
   );
   itemsToDisplay = [];
   amountOfRecipes = 0;
-
-  let i = 0;
-  while (i < recipeInfosContainer.length) {
-    const container = recipeInfosContainer[i];
+  recipeInfosContainer.forEach((container) => {
     const data = container.getAttribute("data-stock");
     let doesStringMatches = false;
-    let allStringsMatches = true;
-
-    let j = 0;
-    while (j < stringsToSortWith.length) {
-      const string = stringsToSortWith[j];
-
+    var allStringsMatches = true;
+    stringsToSortWith.forEach((string) => {
       if (allStringsMatches) {
         doesStringMatches = makeStringCaseAndAccentInsensitive(data).includes(
           makeStringCaseAndAccentInsensitive(string)
         );
         allStringsMatches = doesStringMatches;
       }
-      j++;
-    }
+    });
     toggleContainersDisplay(container, allStringsMatches);
     displayAmountOfRecipes(amountOfRecipes);
-    i++;
-  }
+  });
   deleteNoMatchMessage();
   displayNoMatchMessage(
     amountOfRecipes,
     stringsToSortWith[stringsToSortWith.length - 1]
   );
-  updateList();
+  updateList(itemsToDisplay);
 }
 
 // Function to remove an element from the sorting array
